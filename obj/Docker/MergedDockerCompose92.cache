@@ -1,0 +1,18 @@
+name: dockercompose13536509858701310971
+services:
+  airlabapi:
+    build:
+      context: C:\Users\Tasos\source\repos\AirLab\AirLab\Dockerfile
+      dockerfile: Dockerfile
+    extra_hosts:
+    - host.docker.internal:host-gateway
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 5000
+      published: "5000"
+      protocol: tcp
+networks:
+  default:
+    name: dockercompose13536509858701310971_default
