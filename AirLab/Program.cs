@@ -2,6 +2,7 @@ using AirLab;
 using AirLab.Clients;
 using AirLab.Data;
 using AirLab.Infrastructure;
+using AirLab.Repositories.ApplicationSettings;
 using AirLab.Repositories.PurpleAir.PurpleAirDatas;
 using AirLab.Repositories.PurpleAir.PurpleAirSensors;
 using AirLab.Services.PurpleAir;
@@ -27,6 +28,7 @@ builder.Services.AddSingleton<IPurpleAirApiClient, PurpleAirApiClient>();
 builder.Services.AddScoped<IPurpleAirSensorRepository, PurpleAirSensorRepository>();
 builder.Services.AddScoped<IPurpleAirDataRepository, PurpleAirDataRepository>();
 builder.Services.AddScoped<IPurpleAirService, PurpleAirService>();
+builder.Services.AddScoped<IApplicationSettingsRepository, ApplicationSettingsRepository>();
 
 builder.Services.AddHttpClient<IPurpleAirApiClient, PurpleAirApiClient>(client =>
 {
@@ -37,6 +39,11 @@ builder.Services.AddHttpClient<IPurpleAirApiClient, PurpleAirApiClient>(client =
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 
 builder.Services.AddHealthChecks();
 builder.Services.AddInfrastructure();
@@ -74,6 +81,8 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
+
+app.UseCors("corsapp");
 
 app.UseAuthorization();
 

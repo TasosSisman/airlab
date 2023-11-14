@@ -5,5 +5,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ActiveDebugProfile>AirLab</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\Tasos\source\repos\AirLab\AirLab\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

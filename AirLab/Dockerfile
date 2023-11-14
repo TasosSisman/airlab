@@ -1,22 +1,7 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+FROM mcr.microsoft.com/windows/servercore/iis
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+RUN powershell -NoProfile -Command Remove-Item -Recurse C:\inetpub\wwwroot\*
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["AirLab/AirLab.csproj", "AirLab/"]
-RUN dotnet restore "AirLab/AirLab.csproj"
-COPY . .
-WORKDIR "/src/AirLab"
-RUN dotnet build "AirLab.csproj" -c Release -o /app/build
+WORKDIR /inetpub/wwwroot
 
-FROM build AS publish
-RUN dotnet publish "AirLab.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AirLab.dll"]
+COPY content/ .

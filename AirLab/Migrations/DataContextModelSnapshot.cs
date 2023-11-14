@@ -22,6 +22,27 @@ namespace AirLab.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AirLab.Models.ApplicationSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationSettings");
+                });
+
             modelBuilder.Entity("AirLab.Models.PurpleAirData", b =>
                 {
                     b.Property<int>("Id")
@@ -136,6 +157,18 @@ namespace AirLab.Migrations
                         .IsUnique();
 
                     b.ToTable("PurpleAirSensors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Altitude = 65.0,
+                            LastSeen = new DateTime(2023, 11, 14, 7, 40, 1, 832, DateTimeKind.Local).AddTicks(846),
+                            Latitude = 37.978293999999998,
+                            Longitude = 23.672758000000002,
+                            Name = "ENVICARE-18",
+                            SensorId = 129953
+                        });
                 });
 
             modelBuilder.Entity("AirLab.Models.PurpleAirData", b =>

@@ -6,6 +6,7 @@ namespace AirLab.Repositories.PurpleAir.PurpleAirSensors
     public interface IPurpleAirSensorRepository
     {
         ICollection<PurpleAirSensorDto> GetPurpleAirSensors();
-        PurpleAirSensorDto GetPurpleAirSensor(int sensorId);
+        Task<PurpleAirSensorDto> GetPurpleAirSensorAsync(int sensorId);
+        Task<bool> CreatePurpleAirSensorAsync(PurpleAirSensor sensor);
     }
 }

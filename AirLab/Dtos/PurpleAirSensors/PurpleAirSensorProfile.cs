@@ -7,7 +7,10 @@ namespace AirLab.Dtos.PurpleAirSensors
     {
         public PurpleAirSensorProfile()
         {
-            CreateMap<PurpleAirSensor, PurpleAirSensorDto>();
+            CreateMap<PurpleAirSensor, PurpleAirSensorDto>()
+                .ForMember(dest => dest.LastSeen, method => method.PreCondition(source => source.LastSeen.HasValue))
+                .ForMember(dest => dest.LastSeen, method => method.MapFrom(source => source.LastSeen.Value.ToString("dd/MM/yyyy HH:mm") ?? null));
+            CreateMap<NewPurpleAirSensor, PurpleAirSensor>();
         }
     }
 }

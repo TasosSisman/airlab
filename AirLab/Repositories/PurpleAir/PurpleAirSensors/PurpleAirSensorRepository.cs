@@ -2,6 +2,7 @@
 using AirLab.Dtos.PurpleAirSensors;
 using AirLab.Models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirLab.Repositories.PurpleAir.PurpleAirSensors
 {
@@ -24,12 +25,20 @@ namespace AirLab.Repositories.PurpleAir.PurpleAirSensors
             return _mapper.Map<List<PurpleAirSensorDto>>(result);
         }
 
-        public PurpleAirSensorDto GetPurpleAirSensor(int sensorId)
+        public async Task<PurpleAirSensorDto> GetPurpleAirSensorAsync(int sensorId)
         {
-            var result = _context.PurpleAirSensors
-                .Where(x => x.SensorId == sensorId).FirstOrDefault();
+            var result = await _context.PurpleAirSensors
+                .Where(x => x.SensorId == sensorId).FirstOrDefaultAsync();
 
             return _mapper.Map<PurpleAirSensorDto>(result);
         }
+
+        public async Task<bool> CreatePurpleAirSensorAsync(PurpleAirSensor sensor)
+        {
+            _context.Add(sensor);
+            var result = await _context.SaveChangesAsync();
+
+            return result == 1;
+        } 
     }
 }

@@ -12,12 +12,16 @@ namespace AirLab.Data
 
         public DbSet<PurpleAirData> PurpleAirData { get; set; }
         public DbSet<PurpleAirSensor> PurpleAirSensors { get; set; }
+        public DbSet<ApplicationSetting> ApplicationSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<PurpleAirSensor>()
+                .HasKey(s => s.Id);
+
+            modelBuilder.Entity<ApplicationSetting>()
                 .HasKey(s => s.Id);
 
             modelBuilder.Entity<PurpleAirSensor>()
